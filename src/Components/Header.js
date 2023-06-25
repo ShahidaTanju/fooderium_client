@@ -1,17 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
 
 
+    const { pathname } = useLocation();
+
+    console.log(pathname);
+
     const navItems = <>
-        <li>
+        <li className={`btn ${pathname === "/" && "btn-neutral text-white"}`}>
             <Link to={"/"}>Home</Link>
         </li>
-        <li>
+        <li className={`btn ${pathname === "/meals" && "btn-neutral text-white"}`}>
             <Link to={"/meals"}>Meals</Link>
         </li>
-        <li>
+        <li className={`btn ${pathname === "/drinks" && "btn-neutral text-white"}`}>
             <Link to={"/drinks"}>Drinks</Link>
         </li>
     </>
@@ -36,7 +40,7 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link className="btn btn-neutral">Get Started</Link>
+                <Link to={"/login"} className="btn btn-neutral">Get Started</Link>
             </div>
         </div>
     );
