@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../Contexts/AuthProvider';
 
 const Header = () => {
 
 
     const { pathname } = useLocation();
 
-    console.log(pathname);
+    const { authUser } = useContext(AuthContext);
+
 
     const navItems = <>
         <li className={`btn ${pathname === "/" && "btn-neutral text-white"}`}>

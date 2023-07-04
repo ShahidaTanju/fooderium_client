@@ -1,11 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import nullProfilePic from '../Assets/null-profile-pic.webp';
+import useUploadingImage from '../hooks/useUploadingImage';
 
 const SignUp = () => {
 
 
     const inputRef = useRef();
+
+    const [uploadingImage, setUploadingImage] = useState(null);
+
+    useUploadingImage(uploadingImage);
 
     return (
         <div className="hero min-h-screen" style={{ backgroundImage: "url(https://media.istockphoto.com/id/1281150061/vector/register-account-submit-access-login-password-username-internet-online-website-concept.jpg?s=612x612&w=0&k=20&c=9HWSuA9IaU4o-CK6fALBS5eaO1ubnsM08EOYwgbwGBo=)" }}>
@@ -19,7 +24,7 @@ const SignUp = () => {
                                 <img src={nullProfilePic} alt="Profile Pic" />
                             </div>
                         </div>
-                        <input ref={inputRef} className="hidden" type="file"></input>
+                        <input onChange={(event) => setUploadingImage(event.target.value)} ref={inputRef} className="hidden" type="file"></input>
                         <div className="space-y-2">
                             <label for="user name" className="block text-sm text-start">User Name</label>
                             <input type="text" name="name" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
@@ -28,7 +33,7 @@ const SignUp = () => {
                     <div className="flex items-center w-full my-4">
                         <hr className="w-full dark:text-gray-400" />
 
-                        <p className="px-3 dark:text-gray-400">OR</p>
+
                         <hr className="w-full dark:text-gray-400" />
                     </div>
                     <div novalidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid">
