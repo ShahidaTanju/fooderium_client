@@ -1,28 +1,68 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Contexts/AuthProvider';
 
 const LogIn = () => {
 
-    const { googleSignIn, gitHubSignIn } = useContext(AuthContext)
+    const { googleSignIn, gitHubSignIn, logIn } = useContext(AuthContext);
+
+    const [err, setErr] = useState("");
 
     const handleGoogleSignIn = () => {
+        setErr("");
         googleSignIn()
             .then(data => {
                 const user = data.user;
                 console.log(user)
             })
-            .catch(err => console.error(err))
+            .catch((err) => {
+                console.error(err)
+                setErr(err.message);
+            });
     };
 
     const handleGitHubsignIn = () => {
+        setErr("");
         gitHubSignIn()
             .then(data => {
                 const user = data.user;
                 console.log(user)
             })
-            .catch(err => console.error(err))
+            .catch((err) => {
+                console.error(err)
+                setErr(err.message);
+            });
     };
+
+    const handleSignIn = (event) => {
+        setErr("");
+
+        event.preventDefault();
+
+        const form = event.target;
+
+        const email = form.email.value;
+        const password = form.password.value;
+
+        const logInInfo = {
+            email,
+            password,
+        };
+
+        logIn(logInInfo?.email, logInInfo?.password)
+            .then((data) => {
+                const user = data?.user;
+                console.log(user);
+            })
+            .catch((err) => {
+                console.error(err)
+                setErr(err.message);
+            });
+    };
+
+
+
+
 
     return (
         <div className="hero min-h-screen" style={{ backgroundImage: "url(https://media.istockphoto.com/id/1281150061/vector/register-account-submit-access-login-password-username-internet-online-website-concept.jpg?s=612x612&w=0&k=20&c=9HWSuA9IaU4o-CK6fALBS5eaO1ubnsM08EOYwgbwGBo=)" }}>
@@ -51,21 +91,24 @@ const LogIn = () => {
                         <p className="px-3 dark:text-gray-400">OR</p>
                         <hr className="w-full dark:text-gray-400" />
                     </div>
-                    <form novalidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid">
+                    <form onSubmit={handleSignIn} className="space-y-8 ng-untouched ng-pristine ng-valid">
                         <div className="space-y-4">
                             <div className="space-y-2">
                                 <label for="email" className="block text-sm text-start">Email address</label>
-                                <input type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                                <input type="email" name="email" placeholder="email" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
                             </div>
                             <div className="space-y-2">
                                 <div className="flex justify-between">
                                     <label for="password" className="text-sm">Password</label>
-                                    <button rel="noopener noreferrer" href="#" className="text-xs hover:underline dark:text-gray-400">Forgot password?</button>
+                                    <button className="text-xs hover:underline dark:text-gray-400">Forgot password?</button>
                                 </div>
-                                <input type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                                <input type="password" name="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
                             </div>
                         </div>
-                        <button type="button" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
+                        {
+                            err && <p className="font-bold text-red-600 text-start">{err}</p>
+                        }
+                        <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
                     </form>
                     <Link to={"/signup"} className="text-xs hover:underline dark:text-gray-400">Doesn't have an account? Sign up</Link>
                 </div>
