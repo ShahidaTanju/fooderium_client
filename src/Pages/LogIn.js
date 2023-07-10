@@ -110,7 +110,7 @@ const LogIn = () => {
                         }
 
                         <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
-                        <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
+                        <button type="submit" className="w-full  py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
                     </form>
                     <Link to={"/signup"} className="text-xs hover:underline dark:text-gray-400">Doesn't have an account? Sign up</Link>
                 </div>
